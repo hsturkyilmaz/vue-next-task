@@ -1,11 +1,37 @@
 <template>
-  <img alt="Tarfin logo" src="https://tarfin.com/img/logo.svg" />
-  <h1 class="text-3xl font-bold underline">Hello world!</h1>
+  <!-- <a href="#/">Events Page</a> | <a href="#/event-detail">Event Detail</a> | -->
+  <component :is="currentView" />
 </template>
 
 <script>
+import EventsPage from "./components/EventsPage.vue";
+import EventDetail from "./components/EventDetail.vue";
+
+const routes = {
+  "/": EventsPage,
+  "/event-detail": EventDetail,
+};
+
 export default {
   name: "App",
+
+  data() {
+    return {
+      currentPath: window.location.hash,
+    };
+  },
+
+  computed: {
+    currentView() {
+      return routes[this.currentPath.slice(1) || "/"];
+    },
+  },
+
+  mounted() {
+    window.addEventListener("hashchange", () => {
+      this.currentPath = window.location.hash;
+    });
+  },
 };
 </script>
 <style >
