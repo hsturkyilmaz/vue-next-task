@@ -1,22 +1,31 @@
 <template>
   <div>EVENTS PAGE</div>
   <Search @SearchRequested="handleSearch"></Search>
-  Loading: {{ isLoading }} <br />
-  Events: {{ events }}
+  <p v-if="isLoading">Loading...</p>
+  <Table :columns="columns" :rows="events"></Table>
 </template>
 <script>
 import Search from "./Search.vue";
+import Table from "./Table.vue";
 import axios from "axios";
 
 export default {
   name: "EventsPage",
   components: {
     Search,
+    Table,
   },
   data() {
     return {
-      isLoading: true,
+      isLoading: false,
       events: [],
+      columns: [
+        { field: "name", title: "Name" },
+        { field: "type", title: "Type" },
+        { field: "id", title: "Event ID" },
+        { field: "date", title: "Date" },
+        // { field: "address", title: "Address" },
+      ],
     };
   },
   methods: {
@@ -33,8 +42,8 @@ export default {
             },
           }
         );
-        console.log(response.data);
-        this.events = response.data._embedded.events[0].name;
+        this.events = response.data._embedded.events;
+        console.log("events: ", this.events);
         this.isLoading = false;
       } catch (error) {
         console.log(error);
