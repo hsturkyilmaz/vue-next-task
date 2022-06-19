@@ -2,11 +2,15 @@
   <div>EVENTS PAGE</div>
   <Search @SearchRequested="handleSearch"></Search>
   <p v-if="isLoading">Loading...</p>
-  <Table :columns="columns" :rows="events"></Table>
+  <Table
+    :columns="columns"
+    :rows="events"
+    @ClickRequested="switchEventDetail"
+  ></Table>
 </template>
 <script>
-import Search from "./Search.vue";
-import Table from "./Table.vue";
+import Search from "../components/Search.vue";
+import Table from "../components/Table.vue";
 import axios from "axios";
 
 export default {
@@ -23,8 +27,7 @@ export default {
         { field: "name", title: "Name" },
         { field: "type", title: "Type" },
         { field: "id", title: "Event ID" },
-        { field: "date", title: "Date" },
-        // { field: "address", title: "Address" },
+        { field: "locale", title: "Locale" },
       ],
     };
   },
@@ -43,11 +46,14 @@ export default {
           }
         );
         this.events = response.data._embedded.events;
-        console.log("events: ", this.events);
         this.isLoading = false;
       } catch (error) {
         console.log(error);
       }
+    },
+
+    switchEventDetail(id) {
+      this.$router.push(`/event-detail/${id}`);
     },
   },
 };
