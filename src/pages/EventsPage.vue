@@ -6,7 +6,7 @@
     :columns="columns"
     :rows="events"
     @ClickRequested="switchEventDetail"
-  ></Table>
+  />
 </template>
 <script>
 import Search from "../components/Search.vue";
