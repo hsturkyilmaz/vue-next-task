@@ -8,14 +8,14 @@
     <p>
       {{ eventDetail.dates.start.localDate ?? "" }}
     </p>
-    <p>{{ eventDetail._embedded.venues[0].name ?? "" }}</p>
-    <p>{{ eventDetail._embedded.venues[0].country.name ?? "" }}</p>
+    <p>{{ eventDetail._embedded?.venues[0].name ?? "" }}</p>
+    <p>{{ eventDetail._embedded?.venues[0].country.name ?? "" }}</p>
     <p v-if="eventDetail.priceRanges">
       {{
         `${eventDetail.priceRanges[0].min} - ${eventDetail.priceRanges[0].max} ${eventDetail.priceRanges[0].currency}`
       }}
     </p>
-    <p>{{ eventDetail.dates.status.code }}</p>
+    <p>{{ eventDetail.dates.status.code ?? "" }}</p>
     <button>
       <router-link to="/">Back</router-link>
     </button>
