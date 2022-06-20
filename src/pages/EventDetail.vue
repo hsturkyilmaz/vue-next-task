@@ -1,9 +1,12 @@
 <template>
-  <div>EVENT DETAIL</div>
+  <button class="p-2 w-48 border hover:bg-sky-100">
+    <router-link to="/">Back</router-link>
+  </button>
+  <div class="my-16 text-5xl">EVENT DETAIL</div>
 
   <div v-if="isLoading">Loading...</div>
 
-  <div>
+  <div class="text-xl mb-16">
     <p>{{ eventDetail.name ?? "" }}</p>
     <p>
       {{ eventDetail.dates.start.localDate ?? "" }}
@@ -15,12 +18,9 @@
         `${eventDetail.priceRanges[0].min} - ${eventDetail.priceRanges[0].max} ${eventDetail.priceRanges[0].currency}`
       }}
     </p>
-    <p>{{ eventDetail.dates.status.code ?? "" }}</p>
-    <button>
-      <router-link to="/">Back</router-link>
-    </button>
-    <img :src="eventDetail.images[0].url" />
+    <p class="capitalize">{{ eventDetail.dates.status.code ?? "" }}</p>
   </div>
+  <img :src="eventDetail.images[0].url" />
 </template>
 <script>
 import axios from "axios";

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="rows.length > 0">
     <table id="example" class="capitalize" style="width: 100%">
       <thead>
         <tr>
@@ -23,23 +23,31 @@
           </td>
 
           <td>
-            <button @click="handleClick(row.id)">Show Detail</button>
+            <button
+              class="p-2 w-32 border-r-2 hover:bg-sky-100"
+              @click="handleClick(row.id)"
+            >
+              Show Detail
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
 
     <div>
-      <p>{{ page }}</p>
-      <button v-if="page != 1" @click="page--">Sola</button>
+      <p>Page {{ page }}</p>
+      <button class="p-2 w-12" v-if="page != 1" @click="page--">⏪</button>
       <button
+        class="p-2 w-12 border hover:bg-sky-100"
         @click="page = pageNumber"
         v-for="pageNumber in pages"
         :key="pageNumber"
       >
         {{ pageNumber }}
       </button>
-      <button v-if="page < pages.length" @click="page++">Sağa</button>
+      <button class="p-2 w-12" v-if="page < pages.length" @click="page++">
+        ⏩
+      </button>
     </div>
   </div>
 </template>
@@ -50,7 +58,7 @@ export default {
   data() {
     return {
       page: 1,
-      perPage: 10,
+      perPage: 8,
       pages: [],
     };
   },

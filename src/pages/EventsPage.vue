@@ -1,7 +1,8 @@
 <template>
-  <div>EVENTS PAGE</div>
+  <div class="my-16 text-5xl">EVENTS SEARCH</div>
   <Search @SearchRequested="handleSearch"></Search>
   <p v-if="isLoading">Loading...</p>
+  <p v-if="noData">No data.</p>
   <Table
     :columns="columns"
     :rows="events"
@@ -22,6 +23,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      noData: false,
       events: [],
       columns: [
         { field: "name", title: "Name" },
@@ -45,10 +47,16 @@ export default {
             },
           }
         );
-        this.events = response.data._embedded.events;
-        this.isLoading = false;
+        if (response.data.page.totalElements > 0) {
+          this.noData = false;
+          this.events = response.data._embedded.events;
+        } else {
+          this.noData = true;
+        }
       } catch (error) {
         console.log(error);
+      } finally {
+        this.isLoading = false;
       }
     },
 
